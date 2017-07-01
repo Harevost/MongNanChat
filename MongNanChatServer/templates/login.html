@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LOGIN</title>
+</head>
+<body>
+
+<div>
+    username <input id="login" type="text"/>
+    password <input id="password" type="password"/>
+    <button onclick="do_login()">Login</button>
+    <button onclick="do_register()">Register</button>
+</div>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript">
+    function do_login () {
+        var login = $("#login").val();
+        var password = $("#password").val();
+
+        var req_data = JSON.stringify({
+            'login': login,
+            'password': password
+        });
+
+        $.post("/login", req_data).done(function (resp_data) {
+            if (resp_data == 'ok') {
+                alert("Success. You are a MongNan.");
+                window.location.replace("/");
+            }
+            else {
+                alert('Failure:\n' + resp_data + '\n' + 'Are you a two-five son?');
+            }
+        }).fail(function (data) {
+            alert('Network exception. Please try again.');
+        });
+    }
+
+    function do_register () {
+        window.location.replace("/register")
+    }
+</script>
+</body>
+</html>
