@@ -83,18 +83,6 @@ class Application(tornado.web.Application):
             "public_key varchar(100) not null)"
         )
 
-    #def create_tables(self):
-    #    try:
-    #        self.db.get('select count(*) from entries')
-    #    except MySQLdb.ProgrammingError:
-    #        subprocess.check_call([
-    #            'mysql',
-    #            '--host=' + options.mysql_host,
-    #            '--database=' + options.mysql_database,
-    #            '--user=' + options.mysql_user,
-    #            '--password=' + options.mysql_password
-    #        ], stdin=open(os.path.join(os.path.dirname(__file__), 'UserInfo.sql')))
-
 if __name__ == "__main__":
     port = 12450
     application = Application()

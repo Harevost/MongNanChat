@@ -3,6 +3,12 @@
 import tornado.web
 import tornado.autoreload
 
+from Crypto import Random
+from Crypto.Hash import SHA
+from Crypto.Cipher import PKCS1_v1_5 as Cipher_pkcs1_v1_5
+from Crypto.Signature import PKCS1_v1_5 as Signature_pkcs1_v1_5
+from Crypto.PublicKey import RSA
+
 class RegisterHandler(tornado.web.RequestHandler):
     def get(self):
         self.render('register.html')
@@ -25,6 +31,20 @@ class RegisterHandler(tornado.web.RequestHandler):
         elif self.application.db.get('select id from users where name="%s"' % username):
             self.write('user already exists')
         else:
-            insert = 'insert into users (username, email, password) values ("%s","%s","%s")' % (username, email, password)
+            random_generator = Random.new().read
+            rsa = RSA.generate(1024, random_generator)
+            pwd_hash = SHA.SHA1Hash(password)
+            private_key = rsa.exportKey()
+            with open(username + '_pri.pem', 'w') as f:
+                f.write(private_key)
+            public_key = rsa.publickey().exportkey()
+            with open(username + '_pub.pem', 'w') as f:
+                f.write(public_key)
+            insert = 'insert into users (username, email, pwd_hash, public_key) values ("%s","%s","%s","%s")' \
+                     % (username, email, pwd_hash, public_key)
             self.application.db.execute(insert)
             self.write('Registered successfully')
+            #用户注册成功，用随机数生成RSA公私钥对，公钥传至服务器，私钥传至本地
+
+
+
