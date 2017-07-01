@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>MongNanChat</title>
+    <script>
+    var ws = new Websocket('ws://localhost:12450/soc');
+    ws.onmessage = function(event) {
+        var table = document.getElementById('message');
+        var data = eval('(' + event.data + ')');
+        ({
+            'sys': function() {
+                var cell = table.insertRow().insertCell();
+                cell.colSpan = 2;
+                cell.innerHTML = data['message'];
+            },
+            'user': function() {
+                var row = table.insertRow();
+                row.insertCell().innerHTML = data['message'];
+                row.insertCell().innerHTML = data['id'];
+            },
+        }[data['type']])();
+    };
+
+    function send() {
+        ws.send(document.getElementById('chat').value);
+        document.getElementById('chat').value = '';
+    }
+    </script>
+</head>
+<body>
+<table id='message'></table>
+<input id='chat'><button onclick="send()">Send</button>
+</body>
+
+</html>

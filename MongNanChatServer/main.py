@@ -11,6 +11,7 @@ from handlers.home import HomeHandler
 from handlers.otherpage import OtherPageHandler
 from handlers.register import RegisterHandler
 from handlers.login import LoginHandler
+from handlers.sockets import SocketsHandler
 from tornado.options import define, options
 
 define('port', default=12450, help='Run on the given port', type=int)
@@ -32,6 +33,7 @@ class Application(tornado.web.Application):
             (r"/home", HomeHandler),
             (r"/login", LoginHandler),
             (r"/register", RegisterHandler),
+            (r"/soc", SocketsHandler),
             (r"/(.+?)", OtherPageHandler),
             (r".*", PageNotFoundHandler),
         ]
@@ -42,7 +44,7 @@ class Application(tornado.web.Application):
             #'ui_modules': UImodules
             'cookie_secret': 'WEIZAIMABUZAICMNFNNDPGUNAOPENTHEGAYMRQUIN',
             'login_url': '/login',
-            'xsrf_cookies': True,
+            'xsrf_cookies': False,
             'debug': True,
             'pycket': {
                 'engine': 'redis',
@@ -66,6 +68,7 @@ class Application(tornado.web.Application):
 
         self.db.execute("drop table if exists entries")
         self.db.execute("drop table if exists users")
+        self.db.execute("drop table if exists friends")
 
         self.db.execute(
             "create table entries("
@@ -78,9 +81,17 @@ class Application(tornado.web.Application):
         self.db.execute(
             "create table users("
             "id int not null auto_increment primary key,"
+            "username varchar(100) not null,"
             "email varchar(100) not null,"
-            "password varchar(100) not null,"
+            "pwd_hash varchar(100) not null,"
             "public_key varchar(100) not null)"
+        )
+
+        self.db.execute(
+            "create table friends("
+            "id int not null auto_increment primary key,"
+            "username varchar(100) not null references users(username),"
+            "friendname varchar(100) not null references users(username))"
         )
 
 if __name__ == "__main__":

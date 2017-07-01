@@ -31,18 +31,18 @@ class RegisterHandler(tornado.web.RequestHandler):
         elif self.application.db.get('select id from users where name="%s"' % username):
             self.write('user already exists')
         else:
-            random_generator = Random.new().read
-            rsa = RSA.generate(1024, random_generator)
-            pwd_hash = SHA.SHA1Hash(password)
-            private_key = rsa.exportKey()
-            with open(username + '_pri.pem', 'w') as f:
-                f.write(private_key)
-            public_key = rsa.publickey().exportkey()
-            with open(username + '_pub.pem', 'w') as f:
-                f.write(public_key)
-            insert = 'insert into users (username, email, pwd_hash, public_key) values ("%s","%s","%s","%s")' \
-                     % (username, email, pwd_hash, public_key)
-            self.application.db.execute(insert)
+            #random_generator = Random.new().read
+            #rsa = RSA.generate(1024, random_generator)
+            #pwd_hash = SHA.SHA1Hash(password)
+            #private_key = rsa.exportKey()
+            #with open(username + '_pri.pem', 'w') as f:
+            #    f.write(private_key)
+            #public_key = rsa.publickey().exportkey()
+            #with open(username + '_pub.pem', 'w') as f:
+            #    f.write(public_key)
+            #insert = 'insert into users (username, email, pwd_hash, public_key) values ("%s","%s","%s","%s")' \
+            #         % (username, email, pwd_hash, public_key)
+            #self.application.db.execute(insert)
             self.write('Registered successfully')
             #用户注册成功，用随机数生成RSA公私钥对，公钥传至服务器，私钥传至本地
 

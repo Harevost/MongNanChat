@@ -17,3 +17,10 @@ CREATE TABLE users(
     pwd_hash VARCHAR(100) NOT NULL,
     public_key VARCHAR(100) NOT NULL
 );
+
+DROP TABLE IF EXISTS friends;
+CREATE TABLE friends(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(100) NOT NULL REFERENCES users(username),
+    friendname VARCHAR(100) NOT NULL REFERENCES users(username)
+)
