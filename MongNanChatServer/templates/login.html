@@ -1,44 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>LOGIN</title>
+  <meta charset="UTF-8">
+  <title>MongNanChat</title>
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/semantic-ui/2.2.10/semantic.min.js"></script>
+  <script type="text/javascript" src="js/login.js"></script>
+  <link rel="stylesheet" href="css/semantic.min.css">
+  <link rel="stylesheet" href="css/icon.min.css">
+  <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
-
-<div>
-    username <input id="login" type="text"/>
-    password <input id="password" type="password"/>
-    <button onclick="do_login()">Login</button>
-    <button onclick="do_register()">Register</button>
-</div>
-<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-<script type="text/javascript">
-    function do_login () {
-        var login = $("#login").val();
-        var password = $("#password").val();
-
-        var req_data = JSON.stringify({
-            'login': login,
-            'password': password
-        });
-
-        $.post("/login", req_data).done(function (resp_data) {
-            if (resp_data == 'ok') {
-                alert("Success. You are a MongNan.");
-                window.location.replace("/");
-            }
-            else {
-                alert('Failure:\n' + resp_data + '\n' + 'Are you a two-five son?');
-            }
-        }).fail(function (data) {
-            alert('Network exception. Please try again.');
-        });
-    }
-
-    function do_register () {
-        window.location.replace("/register")
-    }
-</script>
+  <div class="conteiner">
+    <div class="ui modal registerpage">
+      <div class="ui segment">
+          <form class="ui form">
+            <h2 class="ui dividing header">注册我的MNChat</h2>
+            <div class="field">
+              <label>账号</label>
+              <input type="text" placeholder = "请输入您的用户名" id="username">
+              <div class="ui hidden divider"></div>
+              <label>邮箱</label>
+              <input type="text" placeholder = "请输入您的邮箱" id="email">
+              <div class="ui hidden divider"></div>
+              <label>密码</label>
+              <input type="password" placeholder = "请输入您的登陆密码" id="password">
+              <input type="password" placeholder = "请重复您的登陆密码" style="margin-top:5px" id="passwordcheck">
+              <div class="ui hidden divider"></div>
+              
+            </div>
+          </form>
+          <div class="ui hidden divider"></div>
+          <button class="ui basic blue button confirm">确认</button>
+      </div>
+    </div>
+    <div class="ui basic modal registersucceed">
+      <div class="ui container center aligned">
+        <div class="header">
+          <i class="heart icon"></i>
+          <h2>注册成功！恭喜你成为一名猛男！</h2>
+        </div>
+      </div>
+    </div>
+    <div class="ui basic modal passworderror">
+      <div class="ui container center aligned">
+        <div class="header">
+          <h2>注册失败，请检查两次密码输入是否一致。</h2>
+        </div>
+      </div>
+    </div>
+    <div class="ui basic modal reuseerror">
+      <div class="ui container center aligned">
+        <div class="header">
+          <h2>注册失败，用户名可能被占用。</h2>
+        </div>
+      </div>
+    </div>
+    <div class="ui basic modal othererror">
+      <div class="ui container center aligned">
+        <div class="header">
+          <h2>注册失败，发生了一些未知错误，请重试。</h2>
+        </div>
+      </div>
+    </div>
+    <p class="loginheader"><br>Redefine重定义<br>Social Network社交</p>
+    <div class="ui raised segment loginwindow center aligned">
+    <h1>登陆我的MNChat</h1>
+    <div class="two fields">
+      <div class="field">
+        <div class="ui left aligned content">
+          <p>账号</p>
+          <div class="ui input">
+          <input type="text" placeholder = "输入账号" id="lgusername">
+        </div>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui left aligned content">
+          <p>密码</p>
+          <div class="ui input">
+          <input type="password" placeholder = "输入密码" id="lgpassword">
+        </div>
+        </div>
+      </div>
+    </div>
+    <button class="ui basic blue button login">登陆</button>
+    <button class="ui basic blue button register">注册</button>
+    </div>
+    <div class="ui basic modal loginsucceed">
+      <div class="ui container center aligned">
+        <div class="ui big active dimmer">
+          <div class="ui large text loader">
+            <h2>猛男着陆！页面跳转中...</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ui basic modal loginfailed">
+      <div class="ui container center aligned">
+        <div class="header">
+          <h2>密码错误，你是二五仔！</h2>
+        </div>
+      </div>
+    </div>
+    <div class="ui basic modal networkfailed">
+      <div class="ui container center aligned">
+        <div class="header">
+          <h2>网络故障，请稍后重试。</h2>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

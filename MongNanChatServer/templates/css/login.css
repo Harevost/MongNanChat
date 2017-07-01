@@ -1,0 +1,72 @@
+html {
+	overflow-y: hidden;
+}
+
+body {
+	height: 100%;
+	background: #cfcfcf;
+  font-family: "微软雅黑";
+  background-image: url(../image/4.jpg);
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+}
+
+.ui.raised.segment.loginwindow {
+	position: absolute;
+	height: 250px;
+	width: 350px;
+	margin-left: -175px; 
+	margin-top: -145px;
+	padding-top: 35px;
+	top: 45%;
+	left: 50%;
+	opacity: 0.92;
+}
+
+h1,h2{
+	display: inline-block;
+	font-family: "微软雅黑";
+}
+
+.ui.dividing.header {
+	font-family: "微软雅黑";
+}
+
+.ui.basic.blue.button {
+	font-family: "微软雅黑";
+}
+
+.ui.content p {
+	font-size: 20px;
+	display: inline-block;
+	margin-right: 5px;
+}
+
+.registersucceed .header {
+	font-size: 80px;
+}
+
+.logo {
+	display: inline-block!important;
+	margin-top: -10px;
+}
+
+
+.loginheader {
+	z-index: -1;
+	position: absolute;
+	top: 48%;
+	left: 3%;
+	font-size: 8rem;
+	font-weight: bold;
+	line-height: 0.8;
+	color: #333;
+	opacity: 0.9;
+}
+
+.registerpage {
+	width: 400px !important;
+	margin-left: -200px !important;
+}
