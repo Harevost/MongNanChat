@@ -1,2 +1,2 @@
 # MongNanChat
-MongNanChat -A simple C/S &amp; P2P IM Project
+MongNanChat -A simple tornado C/S &amp; P2P IM Project
