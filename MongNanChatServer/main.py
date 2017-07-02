@@ -9,7 +9,6 @@ import subprocess
 
 from handlers.home import HomeHandler
 from handlers.otherpage import OtherPageHandler
-from handlers.register import RegisterHandler
 from handlers.login import LoginHandler
 from handlers.sockets import SocketsHandler
 from tornado.options import define, options
@@ -32,7 +31,6 @@ class Application(tornado.web.Application):
             (r"/", tornado.web.RedirectHandler, {"url": "/home"}),
             (r"/home", HomeHandler),
             (r"/login", LoginHandler),
-            (r"/register", RegisterHandler),
             (r"/soc", SocketsHandler),
             (r"/(.+?)", OtherPageHandler),
             (r".*", PageNotFoundHandler),
