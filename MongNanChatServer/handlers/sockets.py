@@ -3,10 +3,17 @@
 import tornado.websocket
 import json
 
+#user_a = {“id”:1,”name”:”A”}
+#user_b = {“id”:2,”name”:”B”}
+#chat_a = { “id”:1, “user”:1, “who”:2, “name”:”B”, “new”:0, msg:[]}
+#chat_b = { “id”:2, “user”:2, “who”:1, “name”:”A”, “new”:0, msg:[]}
+#msg = { “user”:发送者id, “name”:发送者name, “date”:发送时间, “content”:消息内容 }
+
+
 class SocketsHandler(tornado.websocket.WebSocketHandler):
     chats = dict()
 
-    def open(self, user_a, user_b, chat_a, chat_b):
+    def open(self, user_a, user_b, chat_a, chat_b, msg):
         self.write_message(json.dump({
             'type': 'sys',
             'message': 'Welcome to MongNanChat',
