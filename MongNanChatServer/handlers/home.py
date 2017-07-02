@@ -1,9 +1,9 @@
 #-*- coding: utf-8 -*-
 
 import tornado.web
-from handlers import BaseHandler
+#from handlers import BaseHandler
 
-class HomeHandler(BaseHandler):
+class HomeHandler(tornado.web.RequestHandler):
     @tornado.web.authenticated
     def get(self):
         user_info = self.current_user

@@ -10,7 +10,7 @@ import subprocess
 from handlers.home import HomeHandler
 from handlers.otherpage import OtherPageHandler
 from handlers.login import LoginHandler
-from handlers.sockets import SocketsHandler
+from handlers.sockets import SocketHandler
 from tornado.options import define, options
 
 define('port', default=12450, help='Run on the given port', type=int)
@@ -31,7 +31,7 @@ class Application(tornado.web.Application):
             (r"/", tornado.web.RedirectHandler, {"url": "/home"}),
             (r"/home", HomeHandler),
             (r"/login", LoginHandler),
-            (r"/soc", SocketsHandler),
+            (r"/soc", SocketHandler),
             (r"/(.+?)", OtherPageHandler),
             (r".*", PageNotFoundHandler),
         ]
@@ -81,10 +81,10 @@ class Application(tornado.web.Application):
             "id int not null auto_increment primary key,"
             "username varchar(100) not null,"
             "email varchar(100) not null,"
-            "pwd_hash varchar(100) not null,"
-            "public_key varchar(100) not null)"
-        )
+            "pwd_hash varchar(100) not null)"
 
+        )
+#"public_key varchar(100) not null)"
         self.db.execute(
             "create table friends("
             "id int not null auto_increment primary key,"

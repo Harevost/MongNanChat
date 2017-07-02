@@ -24,7 +24,13 @@ function regist (){
 		'pwd_confirm': pwd_confirm,
 		'log_reg_flag': '0'	
 	});*/
-
+    var req_data = {
+                        "username": username,
+                        "password": password,
+                        "email": email,
+                        "log_reg_flag": '0'
+                    }
+    /*console.log(req_data);*/
 	if (password!=pwd_confirm) {
 		$('.ui.modal.passworderror').modal('show');
 	}
@@ -32,15 +38,16 @@ function regist (){
 		$.ajax({
 			url: "/login",
 			type: "POST",
-			datatype: 'json',
+			/*datatype: 'json'*,*/
 			data: {
 				"username": username,
 				"password": password,
 				"email": email,
-				"log_reg_flag": 0
+				"log_reg_flag": '0'
 			},
-			success: function(resp_data){
-				if (resp_data=='ok') {
+			success: function(data){
+			    console.log(data);
+				if (data=='1') {
 					$('.registersucceed').modal('show');
 				}
 				else {
@@ -56,8 +63,8 @@ function regist (){
 }
 
 function login() {
-	var username = $('#lgusername');
-	var password = $('#lgpassword');
+	var username = $('#lgusername').val();
+	var password = $('#lgpassword').val();
 /*
 	$.post('/login', req_data).done(function(resp_data){
 		if (resp_data=='ok') {
@@ -73,14 +80,14 @@ function login() {
 	$.ajax({
 		url: "/login",
 		type: "POST",
-		datatype: 'json',
+		/*datatype: 'json',*/
 		data: {
 			"username": username,
 			"password": password,
-			"log_reg_flag": 1
+			"log_reg_flag": '1'
 		},
-		success: function(resp_data){
-			if (resp_data=='ok') {
+		success: function(data){
+			if (data=='1') {
 				$('.loginsucceed').modal('show');
 			}
 			else {

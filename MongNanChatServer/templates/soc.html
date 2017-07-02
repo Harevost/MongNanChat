@@ -1,36 +1,25 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>MongNanChat</title>
-    <script>
-    var ws = new Websocket('ws://localhost:12450/soc');
-    ws.onmessage = function(event) {
-        var table = document.getElementById('message');
-        var data = eval('(' + event.data + ')');
-        ({
-            'sys': function() {
-                var cell = table.insertRow().insertCell();
-                cell.colSpan = 2;
-                cell.innerHTML = data['message'];
-            },
-            'user': function() {
-                var row = table.insertRow();
-                row.insertCell().innerHTML = data['message'];
-                row.insertCell().innerHTML = data['id'];
-            },
-        }[data['type']])();
-    };
-
-    function send() {
-        ws.send(document.getElementById('chat').value);
-        document.getElementById('chat').value = '';
-    }
-    </script>
+    <title>Tornado Websocket</title>
 </head>
-<body>
-<table id='message'></table>
-<input id='chat'><button onclick="send()">Send</button>
-</body>
+<script type="text/javascript">
+    var ws;
+    function onLoad(){
+        ws = new WebSocket("ws://localhost:12450/ws");
+        ws.onmessage = function(e){
+            alert(e.data)
+        }
+    }
 
+
+    function sendMsg(){
+        ws.send(document.getElementById('msg').value);
+    }
+</script>
+<body onload='onLoad();'>
+    Message to send:   <input type="text" id="msg" />
+      <input type="button" onclick="sendMsg();" value="发送" />
+</body>
 </html>
