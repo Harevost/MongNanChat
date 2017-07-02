@@ -1,0 +1,18 @@
+html {
+	overflow-y: hidden;
+}
+
+body {
+	background-image: url(../image/back.jpg);
+	background-repeat: repeat;
+}
+
+.main {
+	position: absolute;
+	width: 750px;
+	height: 500px;
+	left: 50%;
+	top: 10%;
+	margin-left: -375px;
+	background-color: #333;
+}
