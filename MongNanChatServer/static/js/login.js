@@ -17,23 +17,28 @@ function regist (){
 	var password = $('#password').val();
 	var pwd_confirm = $('#passwordcheck').val();
 	var email = $('#email').val();
-	var req_data = JSON.stringify({
+/*	var req_data = JSON.stringify({
 		'username': username,
 		'password': password,
 		'email': email,
 		'pwd_confirm': pwd_confirm,
 		'log_reg_flag': '0'	
-	});
+	});*/
 
 	if (password!=pwd_confirm) {
 		$('.ui.modal.passworderror').modal('show');
 	}
 	else {
 		$.ajax({
-			url: '/login/',
-			type: 'post',
+			url: "/login",
+			type: "POST",
 			datatype: 'json',
-			data: req_data,
+			data: {
+				"username": username,
+				"password": password,
+				"email": email,
+				"log_reg_flag": 0
+			},
 			success: function(resp_data){
 				if (resp_data=='ok') {
 					$('.registersucceed').modal('show');
@@ -53,11 +58,6 @@ function regist (){
 function login() {
 	var username = $('#lgusername');
 	var password = $('#lgpassword');
-	var req_data = JSON.stringify({
-		'username': username,
-		'password': password,
-		'log_reg_flag': '1'
-	})
 /*
 	$.post('/login', req_data).done(function(resp_data){
 		if (resp_data=='ok') {
@@ -71,10 +71,14 @@ function login() {
 		$('.networkfailed').modal('show');
 	})*/
 	$.ajax({
-		url: '/login/',
-		type: 'post',
+		url: "/login",
+		type: "POST",
 		datatype: 'json',
-		data: req_data,
+		data: {
+			"username": username,
+			"password": password,
+			"log_reg_flag": 1
+		},
 		success: function(resp_data){
 			if (resp_data=='ok') {
 				$('.loginsucceed').modal('show');
