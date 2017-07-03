@@ -1,25 +1,50 @@
 <!DOCTYPE HTML>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>Tornado Websocket</title>
-</head>
-<script type="text/javascript">
-    var ws;
-    function onLoad(){
-        ws = new WebSocket("ws://localhost:12450/ws");
-        ws.onmessage = function(e){
-            alert(e.data)
-        }
-    }
+    <head>
+        <title>
+            MongNanChat -WebSocket-
+        </title>
+    </head>
 
+    <body>
+        <script type="text/javascript">
+            var socket;
+            if (!window.WebSocket) {
+                window.WebSocket = window.MozWebSocket;
+            }
+            if (window.WebSocket) {
+                socket = new WebSocket("ws://127.0.0.1:12450/soc");
+                socket.onmessage = function(event) {
+                    var ta = document.getElementById('responseText');
+                    ta.value = ta.value + '\n' + event.data;
+                };
+                socket.onopen = function(event) {
+                    var ta = document.getElementById('responseText');
+                    ta.value = ta.value + "WebSocked Opened!";
+                };
+                socket.onclose = function(event) {
+                    var ta = document.getElementById('responseText');
+                    ta.value = ta.value + "WebSocket Closed!";
+                };
+            } else {
+                alert("Your browser does not support WebSocket.");
+            }
 
-    function sendMsg(){
-        ws.send(document.getElementById('msg').value);
-    }
-</script>
-<body onload='onLoad();'>
-    Message to send:   <input type="text" id="msg" />
-      <input type="button" onclick="sendMsg();" value="发送" />
-</body>
+            function send(message) {
+                if (!window.WebSocket) { return; }
+                if (socket.readyState == WebSocket.OPEN) {
+                    socket.send(message);
+                } else {
+                    alert("The socket is not open.");
+                }
+            }
+        </script>
+        <h3>Send: </h3>
+        <form onsubmit="return false;">
+        <input type="text" name="message" value="Hello World!">
+        <input type="button" value="Send" onclick="send(this.form.message.value)">
+        <h3>Receive: </h3>
+        <textarea id="responseText" style="width:500px;height:300px;"></textarea>
+        </form>
+    </body>
 </html>

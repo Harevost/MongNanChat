@@ -7,10 +7,10 @@ import MySQLdb
 import torndb
 import subprocess
 
-from handlers.home import HomeHandler
+from handlers.index import IndexHandler
 from handlers.otherpage import OtherPageHandler
 from handlers.login import LoginHandler
-from handlers.sockets import SocketHandler
+#from handlers.sockets import SocketHandler
 from tornado.options import define, options
 
 define('port', default=12450, help='Run on the given port', type=int)
@@ -28,10 +28,12 @@ class Application(tornado.web.Application):
     def __init__(self):
 
         handlers = [
-            (r"/", tornado.web.RedirectHandler, {"url": "/home"}),
-            (r"/home", HomeHandler),
+            (r"/", IndexHandler),
+            (r"/home", IndexHandler),
+            (r"/index", IndexHandler),
+            (r"/index/(.*)", IndexHandler),
             (r"/login", LoginHandler),
-            (r"/soc", SocketHandler),
+#            (r"/soc", SocketHandler),
             (r"/(.+?)", OtherPageHandler),
             (r".*", PageNotFoundHandler),
         ]
@@ -71,7 +73,7 @@ class Application(tornado.web.Application):
         self.db.execute(
             "create table entries("
             "id int not null auto_increment primary key,"
-            "user_id varchar(100) not null references users(username),"
+            "user_id varchar(100) not null unique references users(username),"
             "ip_address varchar(100) not null,"
             "port varchar(100) not null)"
         )
@@ -79,7 +81,7 @@ class Application(tornado.web.Application):
         self.db.execute(
             "create table users("
             "id int not null auto_increment primary key,"
-            "username varchar(100) not null,"
+            "username varchar(100) not null unique,"
             "email varchar(100) not null,"
             "pwd_hash varchar(100) not null)"
 
